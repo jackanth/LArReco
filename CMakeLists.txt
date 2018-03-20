@@ -44,6 +44,13 @@ if(PANDORA_MONITORING)
     find_package(ROOT 5.26.00 REQUIRED COMPONENTS Eve Geom RGL EG)
 endif()
 
+if(PHYSICS_CONTENT)
+    find_package(LArPhysicsContent 00.01.00 REQUIRED)
+    include_directories(${LArPhysicsContent_INCLUDE_DIRS})
+    link_libraries(${LArPhysicsContent_LIBRARIES})
+    add_definitions(${LArPhysicsContent_DEFINITIONS} -DPHYSICS_CONTENT)
+endif()
+
 #-------------------------------------------------------------------------------------------------------------------------------------------
 # Low level settings - compiler etc
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -pedantic -Wno-long-long -Wno-sign-compare -Wshadow -fno-strict-aliasing -std=c++11 ${CMAKE_CXX_FLAGS}")
