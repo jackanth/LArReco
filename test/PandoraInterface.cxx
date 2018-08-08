@@ -24,6 +24,10 @@
 #include "TApplication.h"
 #endif
 
+#ifdef PHYSICS_CONTENT
+#include "larphysicscontent/LArPhysicsContent.h"
+#endif
+
 #include <getopt.h>
 #include <iostream>
 #include <string>
@@ -84,6 +88,10 @@ void CreatePandoraInstances(const Parameters &parameters, const Pandora *&pPrima
     pPrimaryPandora = new Pandora();
     PANDORA_THROW_RESULT_IF(STATUS_CODE_SUCCESS, !=, LArContent::RegisterAlgorithms(*pPrimaryPandora));
     PANDORA_THROW_RESULT_IF(STATUS_CODE_SUCCESS, !=, LArContent::RegisterBasicPlugins(*pPrimaryPandora));
+
+#ifdef PHYSICS_CONTENT
+    PANDORA_THROW_RESULT_IF(STATUS_CODE_SUCCESS, !=, LArPhysicsContent::RegisterAlgorithms(*pPrimaryPandora));
+#endif
 
     if (!pPrimaryPandora)
         throw StatusCodeException(STATUS_CODE_FAILURE);
